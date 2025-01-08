@@ -1,13 +1,32 @@
-<h1><%= t ".title" %></h1>
 
-<%= link_to "New product", new_product_path if authenticated? %>
-<%= link_to "Login", new_session_path unless authenticated? %>
-
-
-<div id="products">
-  <% @products.each do |product| %>
-    <div>
-      <%= link_to product.name, product %>
-    </div>
-  <% end %>
+<div class="p-5">
+    <h1 class="display display-5 text-center"><%= t "hello" %></h1>
+    <hr/>
+    <%= link_to t("newProduct"), new_product_path,class:"btn btn-primary" if authenticated? %> 
+    <h1><%= t "product" %></h1>
+    <table class="table w-75 alert alert-info">
+        <thead>
+            <tr>
+                <th><%= t "id" %></th>
+                <th><%= t "name" %></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @products.each do |product| %>
+                <tr>
+                    <td><%= product.id%></td>
+                    <td><%= product.name%></td>
+                    <td>
+                        <%= link_to t('detail'), product, class:"btn btn-success" %>
+                        <% if authenticated? %>
+                        <%= link_to t("edit"), edit_product_path(product), class:"btn btn-primary" %>
+                        <% end %>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
 </div>
+
+
