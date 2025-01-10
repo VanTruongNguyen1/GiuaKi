@@ -1,20 +1,30 @@
-<p><%= link_to "Back", products_path %></p>
+<div class="container mt-4">
+  <%= link_to "Back", products_path, class: "btn btn-secondary mb-3" %>
 
-<section class="product">
-  <%= image_tag @product.featured_image if @product.featured_image.attached? %>
-  <%= render "inventory", product: @product %>
+  <div class="row">
+    <div class="col-md-6">
+      <% if @product.featured_image.attached? %>
+        <%= image_tag @product.featured_image, class: "img-fluid rounded shadow" %>
+      <% end %>
+    </div>
 
-  <section class="product">
-    <% cache @product do %>
-        <h1><%= @product.name %></h1>
-        <%= @product.description %>
-        <p>Inventory count: <%= @product.inventory_count %></p>
-    <% end %>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <% cache @product do %>
+            <h1 class="card-title"><%= @product.name %></h1>
+            <p class="card-text"><%= @product.description %></p>
+            <p><strong>Inventory count:</strong> <%= @product.inventory_count %></p>
+          <% end %>
+        </div>
+      </div>
 
-    <%= link_to "Back", products_path %>
-    <% if authenticated? %>
-      <%= link_to "Edit", edit_product_path(@product) %>
-      <%= button_to "Destroy", @product, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
-    <% end %>
-  </section>
-</section>
+      <div class="mt-3">
+        <% if authenticated? %>
+          <%= link_to "Edit", edit_product_path(@product), class: "btn btn-warning me-2" %>
+          <%= button_to "Destroy", @product, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
